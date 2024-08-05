@@ -85,4 +85,9 @@ public class UserServiceImpl implements UserService {
         return Optional.ofNullable(save);
     }
 
+    @Override
+    public User getUserByEmail(String email) {
+        return userRepo.findByEmail(email).orElseThrow(null);
+    }
+
 }

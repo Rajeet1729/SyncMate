@@ -13,23 +13,15 @@ public class FileValidator implements ConstraintValidator<validFile,MultipartFil
     @Override
     public boolean isValid(MultipartFile file, ConstraintValidatorContext context) {
         if(file==null||file.isEmpty()){
-            
-            context.disableDefaultConstraintViolation();
-            context.buildConstraintViolationWithTemplate("file cannot be empty").addConstraintViolation();
-            return false;
+        
+            return true;
         }
         if(file.getSize()>MAX_FILE_SIZE){
             context.disableDefaultConstraintViolation();
             context.buildConstraintViolationWithTemplate("File size should be less 2MB").addConstraintViolation();
             return false;
         }
-        // try {
-        //     BufferedImage bufferedImage  = ImageIO.read(file.getInputStream());
-            
-        // } catch (IOException e) {
-        //     // TODO Auto-generated catch block
-        //     e.printStackTrace();
-        // }
+       
         return true;
         
     }

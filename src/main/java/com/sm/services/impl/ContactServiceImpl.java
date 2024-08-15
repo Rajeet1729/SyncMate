@@ -4,6 +4,9 @@ import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.sm.entities.Contact;
@@ -46,21 +49,59 @@ public class ContactServiceImpl implements ContactService {
         return contactRepo.save(contact);
     }
 
-    @Override
-    public List<Contact> search(String name, String email, String phoneNumber) {
-        return null;
-    }
+    
 
     @Override
     public Contact update(Contact contact) {
-        // TODO Auto-generated method stub
-        return null;
+        var contactOld = contactRepo.findById(contact.getId()).orElseThrow(()->new ResourceNotFoundException("Contact not Found") );
+        contactOld.setName(contact.getName());
+        contactOld.setEmail(contact.getEmail());
+        contactOld.setAddress(contact.getAddress());
+        contactOld.setDescription(contact.getDescription());
+        contactOld.setCloudinaryImagePublicId(contact.getCloudinaryImagePublicId());
+        contactOld.setPicture(contact.getPicture());
+        contactOld.setWebsiteLink(contact.getWebsiteLink());
+        contactOld.setLinkedInLink(contact.getLinkedInLink());
+        contactOld.setPhoneNumber(contact.getPhoneNumber());
+        contactOld.setFavorite(contact.isFavorite());
+        
+
+        return contactRepo.save(contactOld);
+
     }
 
     @Override
-    public List<Contact> getByUser(User user) {
-        return  contactRepo.findByUser(user);
+    public Page<Contact> getByUser(User user,int page,int size, String sortBy,String direction ) {
+        Sort sort = direction.equals("desc")? Sort.by(sortBy).descending():Sort.by(sortBy).ascending();
+        
+        var pageable = PageRequest.of(page,size,sort);
+
+        return  contactRepo.findByUser(user,pageable);
     }
-    
+
+    @Override
+    public Page<Contact> searchByName(String name, int size, int page, String sortBy, String order,User user) {
+        Sort sort = order.equals("desc")? Sort.by(sortBy).descending() : Sort.by(sortBy).ascending();
+        var pageable = PageRequest.of(page,size,sort);
+
+        return contactRepo.findByUserAndNameContaining(user,name, pageable);
+    }
+
+    @Override
+    public Page<Contact> searchByEmail(String email, int size, int page, String sortBy, String order,User user) {
+        Sort sort = order.equals("desc")? Sort.by(sortBy).descending() : Sort.by(sortBy).ascending();
+        var pageable = PageRequest.of(page,size,sort);
+
+        return contactRepo.findByUserAndEmailContaining( user,email,pageable);
+    }
+
+    @Override
+    public Page<Contact> SerachbyPhoneNumber(String phoneNumberKeyword, int size, int page, String sortBy,String order,User user) {
+        Sort sort = order.equals("desc")? Sort.by(sortBy).descending() : Sort.by(sortBy).ascending();
+        var pageable = PageRequest.of(page,size,sort);
+
+        return contactRepo.findByUserAndPhoneNumberContaining(user,phoneNumberKeyword, pageable);
+    }
+
 
 }

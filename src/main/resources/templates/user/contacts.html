@@ -167,9 +167,9 @@
                     </td>
                     <td class="px-6 py-4">
                       <div>
-                        <!-- <a data-th-href="@{'/user/contacts/delete/'+*{id}}">
+                         <a data-th-href="@{'/user/contacts/delete/'+*{id}}">
                           <i class="fa-solid w-6 h-6 fa-trash"></i>
-                        </a> -->
+                        </a> 
 
                         <!-- delete contact -->
                         <button th:onclick="deleteContact([[${c.id}]])">
@@ -191,7 +191,7 @@
               </table>
 
               <!-- pagination component  -->
-              <!-- <div
+               <div
                 data-th-if="${pageContact.totalElements>0}"
                 class="pagination_container bg-white dark:bg-gray-800 p-5 text-center"
               >
@@ -204,8 +204,8 @@
                         class="flex items-center justify-center px-4 h-10 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
                         >Previous</a
                       >
-                    </li> -->
-                    <!-- <li
+                    </li> 
+                     <li
                       data-th-each="index :  ${#numbers.sequence(0,pageContact.totalPages-1)}"
                     >
                       <a
@@ -216,25 +216,25 @@
                       >
                         <span data-th-text="${index+1}"></span>
                       </a>
-                    </li> -->
+                    </li> 
 
-                    <!-- <li data-th-unless="${pageContact.last}">
+                     <li data-th-unless="${pageContact.last}">
                       <a
                         data-th-href="@{'/user/contacts?size='+${pageSize}+'&page=' + ${pageContact.number+1}}"
                         href="#"
                         class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
                         >Next</a
                       >
-                    </li> -->
-                  <!-- </ul> -->
-                <!-- </nav> -->
-              <!-- </div> -->
-              <!-- <h1
+                    </li> 
+                   </ul> 
+                 </nav> 
+               </div> 
+               <h1
                 class="text-5xl text-center dark:bg-gray-800 dark:text-white bg-white p-4"
                 data-th-if="${pageContact.totalElements<=0}"
               >
                 No result found
-              </h1> -->
+              </h1> 
             </div>
           </div>
         </div>
